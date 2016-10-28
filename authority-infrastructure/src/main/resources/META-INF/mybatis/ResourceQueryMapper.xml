@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.own.authority.infrastructure.repository.mysql.mapper.ResourceQueryMapper">
+    <resultMap id="BaseResultMap" type="com.own.authority.domain.role.model.Resource">
+        <id column="id" jdbcType="BIGINT" property="id" />
+    </resultMap>
+
+    <select id="selectIdByRoleIdAndSystemType" resultType="java.lang.Long">
+        select r.id from role_resource rr left join resource r on rr.resource_id=r.id where rr.role_id=#{roleId} and r.system_type=#{systemType} and is_link=true order by r.order_by,r.level
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from resource r where 1=1
+        <if test="systemType != null">
+            and r.system_type = #{systemType}
+        </if>
+        <if test="searchField != null">
+            and (r.name like concat('%',#{searchField},'%') or r.value  like concat('%',#{searchField},'%'))
+        </if>
+        order by r.order_by,r.level
+         LIMIT  #{offset,jdbcType=INTEGER}, #{size,jdbcType=INTEGER}
+    </select>
+</mapper>

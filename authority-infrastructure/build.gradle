@@ -1,0 +1,29 @@
+group 'authority'
+version '1.0'
+ext['hibernate.version'] = '5.0.2.Final'
+
+dependencies {
+    compile project(":authority-domain")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    //mybatis
+    compile('com.mchange:c3p0:0.9.5')
+    compile('mysql:mysql-connector-java:5.1.36')
+    compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.0.0')
+
+
+    compile("com.yuanmai.logistics.sdk:logistics-common:1.1.4")
+
+    compile 'com.yuanmai.logistics.sdk:logistics-common-data:1.0.2'
+
+
+
+
+
+
+    //kafka
+    compile('org.apache.kafka:kafka_2.10:0.8.2.1'){
+        exclude(group:'log4j', module:'log4j')
+    }
+
+}

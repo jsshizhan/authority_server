@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="warn">
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
+        </Console>
+        <RollingFile name="ServerLog" fileName="logs/crm/server.log"
+                     filePattern="logs/crm/server-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20 MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="MybatisLog" fileName="logs/crm/mybatis.log"
+                     filePattern="logs/crm/mybatis-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20 MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="OtherLog" fileName="logs/crm/other.log"
+                     filePattern="logs/crm/other-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20 MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <logger name="org.springframework" level="error"  >
+        </logger>
+        <logger name="cn.jpush" level="warn"  additivity="false"> </logger>
+        <logger name="com.own.authority.infrastructure.repository.mysql" level="debug"  additivity="false" >
+            <appender-ref ref="MybatisLog"/>
+            <appender-ref ref="Console"/>
+        </logger>
+        <logger name="com.own.authority" level="debug"  additivity="false">
+            <appender-ref ref="ServerLog"/>
+            <appender-ref ref="Console"/>
+        </logger>
+        <root level="warn">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="OtherLog"/>
+        </root>
+    </loggers>
+</configuration>

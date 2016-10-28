@@ -1,0 +1,36 @@
+
+apply plugin: 'application'
+
+mainClassName = "com.own.authority.crm.Application"
+
+jar {
+    destinationDir = file("${project.rootDir}/bin/docker/crm")
+    archiveName  = "authority-application" + ".${extension}"
+}
+
+
+dependencies {
+    compile project(":authority-infrastructure")
+
+    //servlet
+    compile("javax.servlet:javax.servlet-api:3.1.0")
+    compile("jstl:jstl:1.2")
+
+
+    runtime("org.springframework.boot:spring-boot-starter-jetty")
+    runtime("org.springframework.boot:spring-boot-devtools")
+
+    compile("org.springframework.boot:spring-boot-starter-log4j2")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("com.tngtech.jgiven:jgiven-junit:0.9.5")
+
+    //API文档生成
+    compile "io.springfox:springfox-swagger2:2.2.2"
+    compile "io.springfox:springfox-swagger-ui:2.2.2"
+
+    //session
+    compile 'org.springframework.session:spring-session'
+}

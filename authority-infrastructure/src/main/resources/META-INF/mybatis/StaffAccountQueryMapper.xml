@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.own.authority.infrastructure.repository.mysql.mapper.AccountQueryMapper">
+    <resultMap id="BaseResultMap" type="com.own.authority.infrastructure.repository.mysql.model.AccountView">
+        <result column="id" jdbcType="BIGINT" property="id" />
+    </resultMap>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select sa.*,sr.id role_id,sr.role_name from account sa join role sr on sa.role_id=sr.id
+        where sr.system_type=#{systemType}
+        <if test="roleId!=null and roleId != ''">
+            and sr.id=#{roleId}
+        </if>
+        <if test="searchField!=null and searchField != ''">
+            and (sa.account_name like concat('%',#{searchField},'%') or sa.real_name like concat('%',#{searchField},'%') or sa.phone like concat('%',#{searchField},'%'))
+        </if>
+        LIMIT  #{offset,jdbcType=INTEGER}, #{size,jdbcType=INTEGER}
+    </select>
+
+</mapper>

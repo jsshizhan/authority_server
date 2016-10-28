@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.own.authority.infrastructure.repository.mysql.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.own.authority.domain.role.model.Role">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <!--<result column="system_type" property="systemType" jdbcType="CHAR" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>-->
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.own.authority.infrastructure.repository.mysql.model.RoleParam">
+        select id,role_name,description from role sr
+        where 1=1
+        and sr.system_type = #{systemType,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+        <if test="searchField != '' and searchField != null">
+            and sr.role_name like concat('%',#{searchField},'%')
+        </if>
+        LIMIT  #{offset,jdbcType=INTEGER}, #{size,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByAccountId" resultMap="BaseResultMap">
+        select sr.* from role sr join account sa on sa.role_id = sr.id
+        and sa.id=#{accountId}
+    </select>
+
+</mapper>

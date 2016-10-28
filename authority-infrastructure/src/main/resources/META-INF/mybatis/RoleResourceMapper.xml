@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.own.authority.infrastructure.repository.mysql.mapper.RoleResourceMapper">
+    <resultMap id="BaseResultMap" type="com.own.authority.domain.role.model.RoleResource">
+        <id column="id" jdbcType="BIGINT" property="id" />
+    </resultMap>
+
+
+    <delete id="deleteByRoleIdAndSystemType">
+        delete rr from role_resource rr,resource r where rr.resource_id=r.id and role_id = #{roleId} and r.system_type=#{systemType}
+    </delete>
+
+    <delete id="deleteByResourceId">
+        delete from role_resource where resource_id = #{resourceId}
+    </delete>
+
+    <insert id="insertBatch"  parameterType="java.util.List">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+        insert into role_resource (role_id,resource_id,create_time)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.roleId},#{item.resourceId},#{item.createTime})
+        </foreach>
+    </insert>
+</mapper>

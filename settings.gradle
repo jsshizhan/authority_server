@@ -1,0 +1,5 @@
+rootProject.name = 'authority_server'
+include 'authority-application'
+include 'authority-domain'
+include 'authority-infrastructure'
+

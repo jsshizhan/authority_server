@@ -1,0 +1,23 @@
+group 'authority'
+version '1.0'
+dependencies {
+    compile("com.yuanmai.logistics.sdk:logistics-common:1.1.2")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-integration")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-log4j2")
+
+    compile("com.yuanmai.logistics.sdk:logistics-integration:1.0.10")
+
+    //序列化
+    compile 'com.esotericsoftware:kryo:3.0.2'
+
+    compile 'org.apache.httpcomponents:httpclient:4.4.1'
+    compile 'dom4j:dom4j:1.6.1'
+    compile 'com.thoughtworks.xstream:xstream:1.4.9'
+
+    //mustache
+    compile "com.github.spullara.mustache.java:compiler:0.8.17"
+
+
+}
