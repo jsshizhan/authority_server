@@ -19,7 +19,7 @@
     </select>
 
     <select id="selectBySystemTypeAndAccountId" resultType="java.lang.String">
-        select r.value from staff_account sa join staff_role sr on sa.role_id = sr.id
+        select r.value from account sa join role sr on sa.role_id = sr.id
         left join role_resource rr on rr.role_id=sa.id
         join resource r on rr.resource_id = r.id
         and sa.id=#{accountId} and r.system_type = #{systemType}
