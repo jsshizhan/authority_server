@@ -1,0 +1,1 @@
+sudo docker run -p 8080:8080 --name authority -v /opt/web/file:/opt/web/file -v /opt/web/temp:/opt/web/temp -v /opt/authority/authority-application.jar:/authority-application.jar -v /opt/authority/logs:/logs -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro --add-host consul-8500.service.consul:60.205.56.240 authority
