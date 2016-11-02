@@ -14,4 +14,6 @@ import java.util.List;
 public interface ResourceJPARepository extends JpaRepository<Resource,Long> {
 
     List<Resource> findBySystemTypeAndLevel(SystemType systemType, int level);
+
+    List<Resource> findByParentId(Long parentId);
 }

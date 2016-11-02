@@ -1,7 +1,9 @@
 package com.own.authority.domain.account.model;
 
 import com.own.authority.domain.role.repository.RoleRepository;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +15,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account {
 
     static RoleRepository staffRoleRepository;

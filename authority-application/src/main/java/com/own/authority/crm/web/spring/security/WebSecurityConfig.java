@@ -29,16 +29,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/version/**").permitAll()
                 .antMatchers("/api/file").permitAll()
-//                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").authenticated()
                 .and().exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
                     HttpServletResponse httpResponse = (HttpServletResponse) response;
                     httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED");
                 })
         ;
     }
+
+    @Bean
+    protected LoginFilter loginFilter(CustomAuthenticationSuccessHandler successHandler) throws Exception {
+        LoginFilter filter = new LoginFilter("/api/auth");
+        filter.setAuthenticationManager(this.authenticationManager());
+        filter.setAuthenticationFailureHandler((request, response, exception) -> {
+            response.setStatus(400);
+            response.setCharacterEncoding("UTF-8");
+
+            String message="";
+
+            if(exception instanceof DisabledException) {
+                message = "账号已被禁用！";
+            } else {
+                message = "用户名或密码错误！";
+            }
+
+            mapper.writeValue(response.getWriter(),new LoginResult(message));
+        });
+        filter.setAuthenticationSuccessHandler(successHandler);
+        return filter;
+    }
+
 
     @Bean
     public UserDetailsService userDetailsService(){

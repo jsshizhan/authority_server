@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Api("账户管理")
 @RestController
-@RequestMapping("/api/staffaccount")
+@RequestMapping("/api/account")
 public class AccountManagerService {
 
     @Autowired

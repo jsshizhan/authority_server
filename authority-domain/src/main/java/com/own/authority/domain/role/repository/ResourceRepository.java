@@ -15,4 +15,10 @@ public interface ResourceRepository extends CrudRepository<Resource,Long> {
     List<Resource> findAll(SystemType systemType, String searchField, int page, int size);
 
     List<Resource> findBySystemTypeAndLevel(SystemType systemType,int level);
+
+    List<Resource> findByParentId(Long id);
+
+    List<Resource> findByRoleIdAndSystemTypeAndLevel(Long roleId,SystemType systemType,int level);
+
+    List<String> findBySystemTypeAndAccountId(SystemType systemType,Long accountId);
 }

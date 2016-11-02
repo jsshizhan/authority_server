@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016-10-27.
@@ -32,6 +34,9 @@ public class Resource {
 
     private boolean isLink;
 
+    @Transient
+    private List<Resource> children;
+
     @Enumerated(EnumType.STRING)
     private SystemType systemType;
 
@@ -41,5 +46,12 @@ public class Resource {
         this.value = resource.getValue();
         this.orderBy = resource.getOrderBy();
         this.level = resource.getLevel();
+    }
+
+    public void addChildren(Resource resource){
+        if(this.children == null){
+            children = new ArrayList<>();
+        }
+        children.add(resource);
     }
 }

@@ -4,6 +4,7 @@ import com.own.authority.domain.role.model.Resource;
 import com.own.authority.domain.role.model.SystemType;
 import com.own.authority.domain.role.repository.ResourceRepository;
 import com.own.authority.infrastructure.repository.mysql.jpa.ResourceJPARepository;
+import com.own.authority.infrastructure.repository.mysql.mapper.ResourceMapper;
 import com.own.authority.infrastructure.repository.mysql.mapper.ResourceQueryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,8 @@ public class ResourceMysqlRepository implements ResourceRepository{
     @Autowired
     ResourceQueryMapper resourceQueryMapper;
 
+    @Autowired
+    ResourceMapper resourceMapper;
 
     @Override
     public void save(Resource entity) {
@@ -45,6 +48,21 @@ public class ResourceMysqlRepository implements ResourceRepository{
 
     @Override
     public List<Resource> findBySystemTypeAndLevel(SystemType systemType, int level) {
-        return resourceJPARepository.findBySystemTypeAndLevel(systemType,level);
+        return resourceMapper.selectBySystemTypeAndLevel(systemType,level);
+    }
+
+    @Override
+    public List<Resource> findByParentId(Long id) {
+        return resourceMapper.selectByParentId(id);
+    }
+
+    @Override
+    public List<String> findBySystemTypeAndAccountId(SystemType systemType, Long accountId) {
+        return resourceMapper.selectBySystemTypeAndAccountId(systemType,accountId);
+    }
+
+    @Override
+    public List<Resource> findByRoleIdAndSystemTypeAndLevel(Long roleId, SystemType systemType, int level) {
+        return resourceMapper.selectByRoleIdAndSystemTypeAndLevel(roleId,systemType,level);
     }
 }
